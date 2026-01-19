@@ -18,7 +18,6 @@ import Image from "next/image";
 
 const Hero = () => {
   const [currentWord, setCurrentWord] = useState(0);
-  const [pulse, setPulse] = useState(false);
   const [currentImage, setCurrentImage] = useState(0);
 
   const heroWords = ["Diagnostic", "Imaging", "Healthcare", "Wellness"];
@@ -112,9 +111,6 @@ const Hero = () => {
       </div>
 
       {/* Pulse Effect */}
-      <div
-        className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 rounded-full border-2 border-blue-400/20 ${pulse ? "animate-ping" : ""}`}
-      ></div>
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 py-16 md:py-24">
@@ -161,19 +157,19 @@ const Hero = () => {
                 <div className="text-sm text-white mt-1">Years Experience</div>
               </div>
               <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-4 text-center hover:scale-105 transition-transform">
-                <div className="text-3xl font-bold bg-gradient-to-r from-blue-500 to-blue-600 bg-clip-text text-transparent">
+                <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">
                   5000+
                 </div>
                 <div className="text-sm text-white mt-1">Patients Served</div>
               </div>
               <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-4 text-center hover:scale-105 transition-transform">
-                <div className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-blue-700 bg-clip-text text-transparent">
+                <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">
                   24/7
                 </div>
                 <div className="text-sm text-white mt-1">Emergency</div>
               </div>
               <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-4 text-center hover:scale-105 transition-transform">
-                <div className="text-3xl font-bold bg-gradient-to-r from-blue-700 to-blue-800 bg-clip-text text-transparent">
+                <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">
                   98%
                 </div>
                 <div className="text-sm text-white mt-1">Accuracy</div>
@@ -213,23 +209,6 @@ const Hero = () => {
             </div>
 
             {/* Features List */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-              {features.map((feature, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-3 bg-white/10 backdrop-blur-lg border border-white/20 rounded-lg p-3 hover:bg-gradient-to-r hover:from-white/20 hover:to-white/10 hover:scale-[1.02] transition-all duration-300 cursor-pointer group"
-                >
-                  <div
-                    className={`bg-gradient-to-r ${feature.color} p-2 rounded-lg group-hover:scale-110 transition-transform`}
-                  >
-                    {feature.icon}
-                  </div>
-                  <span className="text-white group-hover:text-blue-100 font-medium">
-                    {feature.text}
-                  </span>
-                </div>
-              ))}
-            </div>
           </div>
         </div>
       </div>

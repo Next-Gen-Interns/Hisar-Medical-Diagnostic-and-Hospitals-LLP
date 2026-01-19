@@ -686,7 +686,7 @@ const About = () => {
             {/* Medical Equipment Image */}
             <div className="relative h-64 lg:h-full rounded-xl overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1586773860418-dc22f8b874bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                src="https://images.unsplash.com/photo-1551601651-2a8555f1a136"
                 alt="Advanced Medical Equipment at Hisar Medical Diagnostic"
                 fill
                 className="object-cover"
