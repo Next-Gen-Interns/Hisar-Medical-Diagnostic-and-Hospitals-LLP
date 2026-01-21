@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -32,6 +32,8 @@ import {
 const About = () => {
   const [activeStat, setActiveStat] = useState(0);
   const [isVisible, setIsVisible] = useState(false);
+  const [isStatHovered, setIsStatHovered] = useState(false);
+  const statsCardRef = useRef(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -50,6 +52,24 @@ const About = () => {
 
     return () => {
       if (element) observer.unobserve(element);
+    };
+  }, []);
+
+  // Handle click outside to remove active state
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        statsCardRef.current &&
+        !statsCardRef.current.contains(event.target)
+      ) {
+        setActiveStat(0); // Reset to first stat
+        setIsStatHovered(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -119,8 +139,8 @@ const About = () => {
       description:
         "Specialized mammography & ultrasound for early breast cancer detection",
       icon: <Heart className="w-8 h-8" />,
-      color: "from-pink-500 to-rose-500",
-      bgColor: "bg-pink-50",
+      color: "from-blue-500 ",
+      bgColor: "bg-blue-50",
       services: [
         "Breast Ultrasound",
         "Mammography",
@@ -135,7 +155,7 @@ const About = () => {
       description:
         "Early detection of various cancers through advanced imaging",
       icon: <Activity className="w-8 h-8" />,
-      color: "from-blue-500 to-cyan-500",
+      color: "from-blue-500",
       bgColor: "bg-blue-50",
       services: [
         "Biopsy Guidance",
@@ -150,8 +170,8 @@ const About = () => {
       title: "Advanced X-ray & Ultrasound",
       description: "High-resolution imaging for accurate diagnosis",
       icon: <Radio className="w-8 h-8" />,
-      color: "from-green-500 to-emerald-500",
-      bgColor: "bg-green-50",
+      color: "from-blue-500",
+      bgColor: "bg-blue-50",
       services: [
         "Digital X-ray",
         "Color Doppler",
@@ -193,6 +213,11 @@ const About = () => {
         "https://images.unsplash.com/photo-1551601651-2a8555f1a136?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80",
     },
   ];
+
+  const handleStatClick = (index) => {
+    setActiveStat(index);
+    setIsStatHovered(true);
+  };
 
   return (
     <section
@@ -281,7 +306,6 @@ const About = () => {
               accurate and timely diagnoses
             </p>
           </div>
-
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
             {keyFeatures.map((feature, index) => (
               <div
@@ -297,36 +321,6 @@ const About = () => {
               </div>
             ))}
           </div>
-
-          {/* Medical Team Image */}
-          <div className="relative h-[300px] rounded-2xl overflow-hidden mb-12">
-            <Image
-              src="https://images.unsplash.com/photo-1550831106-0994fe8abcfe?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
-              alt="Our Expert Medical Team at Hisar Medical Diagnostic"
-              fill
-              className="object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-900/70 to-transparent"></div>
-            <div className="absolute inset-0 flex items-center p-8">
-              <div className="max-w-lg">
-                <h3 className="text-2xl font-bold text-white mb-4">
-                  Expert Team of Radiologists
-                </h3>
-                <p className="text-blue-100 mb-6">
-                  Our experienced team of radiologists and technicians are
-                  dedicated to providing accurate diagnoses with compassionate
-                  care.
-                </p>
-                <Link
-                  href="/team"
-                  className="inline-flex items-center gap-2 bg-white text-blue-600 px-6 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
-                >
-                  Meet Our Team
-                  <ChevronRight className="w-5 h-5" />
-                </Link>
-              </div>
-            </div>
-          </div>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-start mb-16">
@@ -335,7 +329,10 @@ const About = () => {
             className={`space-y-8 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
           >
             {/* Stats Card with Team Image */}
-            <div className="bg-gradient-to-br from-blue-900 to-blue-800 rounded-2xl p-8 text-white shadow-xl relative overflow-hidden">
+            <div
+              ref={statsCardRef}
+              className="bg-gradient-to-br from-blue-900 to-blue-800 rounded-2xl p-8 text-white shadow-xl relative overflow-hidden"
+            >
               <div className="absolute top-0 right-0 w-64 h-64 opacity-20">
                 <Image
                   src="https://images.unsplash.com/photo-1516549655669-df65c2d4e677?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
@@ -359,9 +356,11 @@ const About = () => {
                   {stats.map((stat, index) => (
                     <div
                       key={index}
-                      onClick={() => setActiveStat(index)}
-                      className={`relative p-6 rounded-xl cursor-pointer transition-all ${
-                        activeStat === index
+                      onClick={() => handleStatClick(index)}
+                      onMouseEnter={() => setIsStatHovered(true)}
+                      onMouseLeave={() => setIsStatHovered(false)}
+                      className={`relative p-6 rounded-xl cursor-pointer transition-all duration-300 ${
+                        activeStat === index && isStatHovered
                           ? "bg-white/20 transform scale-105"
                           : "bg-white/10 hover:bg-white/15"
                       }`}
@@ -381,8 +380,8 @@ const About = () => {
                   ))}
                 </div>
 
-                {/* Active Stat Description */}
-                <div className="p-6 bg-white/10 rounded-xl backdrop-blur-sm">
+                {/* Active Stat Description - FIXED: Only show when stat is clicked/hovered */}
+                <div className="p-6 bg-white/10 rounded-xl backdrop-blur-sm transition-all duration-300">
                   <p className="text-lg font-semibold mb-2">
                     {stats[activeStat]?.label}
                   </p>
@@ -420,12 +419,6 @@ const About = () => {
                       <p className="text-sm text-gray-600">
                         {service.description}
                       </p>
-                      <Link
-                        href="/services"
-                        className="inline-flex items-center gap-1 text-blue-600 text-sm font-medium mt-2"
-                      >
-                        Learn more <ChevronRight className="w-4 h-4" />
-                      </Link>
                     </div>
                   </div>
                 ))}
@@ -489,7 +482,7 @@ const About = () => {
             {/* Location & Contact Card with Map Image */}
             <div className="bg-gradient-to-br from-blue-50 to-cyan-50 rounded-2xl p-8 border border-blue-100 shadow-lg">
               <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                <MapPin className="text-red-500" />
+                <MapPin className="text-blue-600" />
                 Visit Our Diagnostic Center
               </h3>
 
@@ -609,14 +602,6 @@ const About = () => {
                       </div>
                     ))}
                   </div>
-
-                  <Link
-                    href="/services"
-                    className="inline-flex items-center text-blue-600 font-semibold group/link"
-                  >
-                    Learn More
-                    <ArrowRight className="ml-2 w-4 h-4 group-hover/link:translate-x-1 transition-transform" />
-                  </Link>
                 </div>
               </div>
             ))}
@@ -624,7 +609,7 @@ const About = () => {
         </div>
 
         {/* Technology Showcase with Equipment Images */}
-        <div className="bg-gradient-to-r from-blue-600 to-blue-700 rounded-2xl p-8 md:p-12 text-white overflow-hidden">
+        <div className=" bg-gradient-to-br from-blue-900 to-blue-800 rounded-2xl p-8 md:p-12 text-white overflow-hidden">
           <div className="grid lg:grid-cols-3 gap-8 items-center">
             <div className="lg:col-span-2">
               <h2 className="text-3xl font-bold mb-4">
@@ -686,41 +671,12 @@ const About = () => {
             {/* Medical Equipment Image */}
             <div className="relative h-64 lg:h-full rounded-xl overflow-hidden">
               <Image
-                src="https://images.unsplash.com/photo-1551601651-2a8555f1a136"
+                src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56"
                 alt="Advanced Medical Equipment at Hisar Medical Diagnostic"
                 fill
                 className="object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-blue-900/40 to-transparent"></div>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom CTA Section */}
-        <div className="mt-16 text-center">
-          <div className="bg-gradient-to-r from-blue-50 to-cyan-50 rounded-2xl p-12 border border-blue-100">
-            <h3 className="text-3xl font-bold text-gray-900 mb-4">
-              Ready for Your Diagnostic Tests?
-            </h3>
-            <p className="text-gray-600 max-w-2xl mx-auto mb-8">
-              Early detection saves lives. Book your appointment today for
-              comprehensive diagnostic screening at Hisar Medical Diagnostic.
-            </p>
-            <div className="flex flex-wrap gap-4 justify-center">
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300 hover:shadow-lg"
-              >
-                <Calendar className="w-6 h-6" />
-                Book Appointment Now
-              </Link>
-              <Link
-                href="/about-services"
-                className="inline-flex items-center gap-2 border-2 border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-300"
-              >
-                Learn About Our Services
-                <ArrowRight className="w-6 h-6" />
-              </Link>
             </div>
           </div>
         </div>

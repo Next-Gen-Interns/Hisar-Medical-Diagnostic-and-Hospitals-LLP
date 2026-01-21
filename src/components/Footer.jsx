@@ -8,7 +8,6 @@ import {
   MapPin,
   Clock,
   Award,
-  Heart,
 } from "lucide-react";
 
 const Footer = () => {
@@ -65,16 +64,17 @@ const Footer = () => {
 
       {/* Content */}
       <div className="relative container mx-auto px-4 py-16">
-        {/* Top Section - CTA Banner */} 
+        {/* Top Section - CTA Banner */}
 
         {/* Main Footer Content */}
         <div className="grid md:grid-cols-4 gap-12 mb-12">
           {/* Company Info */}
           <div className="md:col-span-1">
             <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
-              <h3 className="text-xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+              <h3 className="text-xl font-bold mb-4 text-white tracking-wide">
                 HISAR MEDICAL DIAGNOSTIC & HOSPITALS LLP
               </h3>
+
               <p className="text-gray-300 mb-6 text-sm leading-relaxed">
                 Your trusted partner in diagnostic imaging and healthcare
                 services in Hisar and surrounding areas.
@@ -217,29 +217,12 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom Section */}
-        <div className="border-t border-white/10 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-gray-400 text-sm">
-              © {new Date().getFullYear()} HISAR MEDICAL DIAGNOSTIC & HOSPITALS
-              LLP. All rights reserved.
-            </p>
-            <div className="flex gap-6 text-gray-400 text-sm">
-              <Link
-                href="/privacy-policy"
-                className="hover:text-cyan-400 transition-colors"
-              >
-                Privacy Policy
-              </Link>
-              <span className="text-gray-600">|</span>
-              <Link
-                href="/terms"
-                className="hover:text-cyan-400 transition-colors"
-              >
-                Terms of Service
-              </Link>
-            </div>
-          </div>
+        {/* Bottom Section - Center Aligned */}
+        <div className="border-t border-white/10 pt-8 text-center">
+          <p className="text-gray-400 text-sm">
+            © {new Date().getFullYear()} HISAR MEDICAL DIAGNOSTIC & HOSPITALS
+            LLP. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

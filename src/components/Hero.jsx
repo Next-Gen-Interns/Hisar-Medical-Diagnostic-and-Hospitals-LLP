@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
@@ -10,7 +9,6 @@ import {
   ChevronRight,
   Sparkles,
   Zap,
-  HeartPulse,
   Stethoscope,
   UserCheck,
 } from "lucide-react";
@@ -19,6 +17,7 @@ import Image from "next/image";
 const Hero = () => {
   const [currentWord, setCurrentWord] = useState(0);
   const [currentImage, setCurrentImage] = useState(0);
+  const [pulse, setPulse] = useState(false); // Add this line
 
   const heroWords = ["Diagnostic", "Imaging", "Healthcare", "Wellness"];
 
@@ -27,29 +26,6 @@ const Hero = () => {
     "https://images.unsplash.com/photo-1582750433449-648ed127bb54?ixlib=rb-4.0.3&auto=format&fit=crop&w=2067&q=80",
     "https://images.unsplash.com/photo-1532938911079-1b06ac7ceec7?ixlib=rb-4.0.3&auto=format&fit=crop&w=2032&q=80",
     "https://images.unsplash.com/photo-1559757175-0eb30cd8c063?ixlib=rb-4.0.3&auto=format&fit=crop&w=2069&q=80",
-  ];
-
-  const features = [
-    {
-      icon: <Shield className="w-5 h-5" />,
-      text: "Advanced X-ray Technology",
-      color: "from-blue-400 to-blue-500",
-    },
-    {
-      icon: <UserCheck className="w-5 h-5" />,
-      text: "Expert Radiologists",
-      color: "from-blue-500 to-blue-600",
-    },
-    {
-      icon: <Clock className="w-5 h-5" />,
-      text: "Same Day Reports",
-      color: "from-blue-600 to-blue-700",
-    },
-    {
-      icon: <HeartPulse className="w-5 h-5" />,
-      text: "24/7 Emergency",
-      color: "from-blue-700 to-blue-800",
-    },
   ];
 
   // Image slider effect
@@ -110,8 +86,6 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Pulse Effect */}
-
       {/* Content */}
       <div className="relative z-10 container mx-auto px-4 py-16 md:py-24">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -130,7 +104,9 @@ const Hero = () => {
               Comprehensive
               <span className="block mt-2">
                 <span className="relative inline-block">
-                  <span className="bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent animate-gradient">
+                  <span
+                    className={`bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 bg-clip-text text-transparent animate-gradient ${pulse ? "animate-pulse" : ""}`}
+                  >
                     {heroWords[currentWord]}
                   </span>
                   <div className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-blue-600 animate-width"></div>
@@ -147,34 +123,6 @@ const Hero = () => {
               – Specialized breast, full-body X-ray, and advanced ultrasound
               services with cutting-edge technology.
             </p>
-
-            {/* Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-              <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-4 text-center hover:scale-105 transition-transform">
-                <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">
-                  10+
-                </div>
-                <div className="text-sm text-white mt-1">Years Experience</div>
-              </div>
-              <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-4 text-center hover:scale-105 transition-transform">
-                <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">
-                  5000+
-                </div>
-                <div className="text-sm text-white mt-1">Patients Served</div>
-              </div>
-              <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-4 text-center hover:scale-105 transition-transform">
-                <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">
-                  24/7
-                </div>
-                <div className="text-sm text-white mt-1">Emergency</div>
-              </div>
-              <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-xl p-4 text-center hover:scale-105 transition-transform">
-                <div className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-blue-500 bg-clip-text text-transparent">
-                  98%
-                </div>
-                <div className="text-sm text-white mt-1">Accuracy</div>
-              </div>
-            </div>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 mb-12">

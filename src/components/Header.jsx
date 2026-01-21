@@ -2,8 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Phone, MessageCircle, Menu, X } from "lucide-react";
-
+import { Menu, X } from "lucide-react";
 import Image from "next/image";
 
 const Header = () => {
@@ -21,9 +20,6 @@ const Header = () => {
   const navItems = [
     { name: "Home", href: "/" },
     { name: "About & Services", href: "/about" },
-    { name: "Gallery", href: "/gallery" },
-    { name: "Testimonials", href: "/testimonials" },
-    { name: "Contact", href: "/contact" },
   ];
 
   return (
@@ -33,9 +29,10 @@ const Header = () => {
       }`}
     >
       <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
+        {/* HEADER ROW */}
+        <div className="flex items-center justify-between w-full">
+          {/* LEFT → LOGO */}
+          <Link href="/" className="flex-shrink-0">
             <div className="relative h-12 w-12">
               <Image
                 src="/logo.png"
@@ -44,47 +41,41 @@ const Header = () => {
                 className="object-contain"
               />
             </div>
-            <div className="hidden md:block">
-              <h1 className="text-lg font-bold text-primary">
-                HISAR MEDICAL DIAGNOSTIC & HOSPITALS LLP
-              </h1>
-            </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            {navItems.map((item) => (
-              <Link
-                key={item.name}
-                href={item.href}
-                className="text-gray-700 hover:text-primary font-medium transition-colors"
-              >
-                {item.name}
-              </Link>
-            ))}
-          </nav>
-
-          {/* Contact Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
-            <a
-              href="tel:9812166286"
-              className="flex items-center space-x-2 bg-primary text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
-            >
-              <Phone size={18} />
-              <span>Call: 9812166286</span>
-            </a>
+          {/* CENTER → TITLE (DESKTOP ONLY) */}
+          <div className="hidden md:block absolute left-1/2 -translate-x-1/2">
+            <h1 className="text-lg font-bold text-primary whitespace-nowrap">
+              HISAR MEDICAL DIAGNOSTIC & HOSPITALS LLP
+            </h1>
           </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-          >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
+          {/* RIGHT → NAVIGATION ONLY */}
+          <div className="flex items-center">
+            {/* DESKTOP NAVIGATION - RIGHT END */}
+            <nav className="hidden md:flex items-center space-x-8">
+              {navItems.map((item) => (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  className="text-gray-700 hover:text-primary font-medium transition-colors"
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
+
+            {/* MOBILE MENU BUTTON */}
+            <button
+              className="md:hidden p-2"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            </button>
+          </div>
         </div>
 
-        {/* Mobile Navigation */}
+        {/* MOBILE NAVIGATION */}
         {isMenuOpen && (
           <div className="md:hidden mt-4 pb-4 border-t pt-4">
             <nav className="flex flex-col space-y-4">
@@ -98,15 +89,6 @@ const Header = () => {
                   {item.name}
                 </Link>
               ))}
-              <div className="flex flex-col space-y-3 pt-4">
-                <a
-                  href="tel:9812166286"
-                  className="flex items-center justify-center space-x-2 bg-primary text-white px-4 py-3 rounded-lg hover:bg-blue-700 transition-colors"
-                >
-                  <Phone size={18} />
-                  <span>Call: 9812166286</span>
-                </a>
-              </div>
             </nav>
           </div>
         )}

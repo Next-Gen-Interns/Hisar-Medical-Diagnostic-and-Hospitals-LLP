@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Award,
   Clock,
@@ -18,6 +18,59 @@ import {
 
 const WhyChooseUs = () => {
   const [hoveredIndex, setHoveredIndex] = useState(null);
+  const [yearsCount, setYearsCount] = useState(0);
+  const [patientsCount, setPatientsCount] = useState(0);
+  const statsRef = useRef(null);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  // Intersection Observer for counting animation
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            setHasAnimated(true);
+
+            // Animate years from 0 to 18
+            let years = 0;
+            const yearsInterval = setInterval(() => {
+              years += 1;
+              setYearsCount(years);
+              if (years >= 18) {
+                clearInterval(yearsInterval);
+              }
+            }, 60); // 18 * 60ms = ~1 second
+
+            // Animate patients from 0 to 50000
+            let patients = 0;
+            const patientsTarget = 50000;
+            const step = patientsTarget / 100; // 100 steps
+
+            const patientsInterval = setInterval(() => {
+              patients += step;
+              if (patients >= patientsTarget) {
+                setPatientsCount(patientsTarget);
+                clearInterval(patientsInterval);
+              } else {
+                setPatientsCount(Math.floor(patients));
+              }
+            }, 20); // 100 * 20ms = 2 seconds
+          }
+        });
+      },
+      { threshold: 0.5 },
+    );
+
+    if (statsRef.current) {
+      observer.observe(statsRef.current);
+    }
+
+    return () => {
+      if (statsRef.current) {
+        observer.unobserve(statsRef.current);
+      }
+    };
+  }, [hasAnimated]);
 
   const features = [
     {
@@ -44,7 +97,7 @@ const WhyChooseUs = () => {
         "Emergency Services",
         "SMS Alerts",
       ],
-      color: "green",
+      color: "blue",
     },
     {
       icon: <DollarSign className="w-10 h-10" />,
@@ -57,7 +110,7 @@ const WhyChooseUs = () => {
         "Insurance Support",
         "EMI Options",
       ],
-      color: "purple",
+      color: "blue",
     },
     {
       icon: <Users className="w-10 h-10" />,
@@ -70,35 +123,35 @@ const WhyChooseUs = () => {
         "Doctor Consultation",
         "Comfort Care",
       ],
-      color: "pink",
+      color: "blue",
     },
   ];
 
   const getColorClasses = (color, type = "gradient") => {
     const colors = {
       blue: {
-        gradient: "from-blue-600 to-cyan-600",
+        gradient: " from-blue-900 to-blue-800",
         light: "bg-blue-50",
         border: "border-blue-100",
         text: "text-blue-700",
       },
       green: {
-        gradient: "from-emerald-600 to-teal-600",
-        light: "bg-emerald-50",
-        border: "border-emerald-100",
-        text: "text-emerald-700",
+        gradient: "from-blue-900 to-blue-800",
+        light: "bg-em-50",
+        border: "border-blue-100",
+        text: "text-blue-700",
       },
       purple: {
-        gradient: "from-purple-600 to-indigo-600",
+        gradient: "from-blue-900 to-blue-800",
         light: "bg-purple-50",
-        border: "border-purple-100",
-        text: "text-purple-700",
+        border: "border-blue-100",
+        text: "text-blue-700",
       },
       pink: {
-        gradient: "from-pink-600 to-rose-600",
+        gradient: "from-blue-900 to-blue-800",
         light: "bg-pink-50",
-        border: "border-pink-100",
-        text: "text-pink-700",
+        border: "border-blue-100",
+        text: "text-blue-700",
       },
     };
 
@@ -121,7 +174,7 @@ const WhyChooseUs = () => {
           </div>
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight">
             Excellence in Healthcare <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-cyan-600">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 ">
               & Compassionate Care
             </span>
           </h2>
@@ -195,35 +248,37 @@ const WhyChooseUs = () => {
                 </ul>
 
                 {/* Bottom Border Indicator */}
-                <div
-                  className={`absolute bottom-0 left-8 right-8 h-1 rounded-full bg-gradient-to-r ${getColorClasses(feature.color, "gradient")} transition-all duration-300 ${
-                    hoveredIndex === index ? "opacity-100" : "opacity-0"
-                  }`}
-                ></div>
               </div>
             </div>
           ))}
         </div>
 
         {/* Hospital Statistics */}
-        <div className="bg-gradient-to-r from-blue-900 via-blue-800 to-cyan-800 rounded-3xl p-10 mb-16 shadow-2xl">
-          <div className="text-center mb-10">
+        <div
+          ref={statsRef}
+          className="bg-gradient-to-br from-blue-900 to-blue-800 rounded-3xl p-10 mb-16 shadow-2xl"
+        >
+          <div className="text-center mb-12">
+            {" "}
+            {/* Changed from mb-10 to mb-12 */}
             <h3 className="text-3xl font-bold text-white mb-4">
               Our Healthcare Milestones
             </h3>
-            <p className="text-blue-200 text-lg">
+            <p className="text-blue-200 text-lg mb-8">
+              {" "}
+              {/* Added mb-8 class here */}
               Delivering excellence in patient care since 2005
             </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-white">
             {[
               {
-                value: "18+",
+                value: `${yearsCount}+`,
                 label: "Years of Trust",
                 icon: <Award className="w-8 h-8" />,
               },
               {
-                value: "50,000+",
+                value: `${patientsCount.toLocaleString()}+`,
                 label: "Patients Served",
                 icon: <Users className="w-8 h-8" />,
               },
@@ -265,19 +320,19 @@ const WhyChooseUs = () => {
               icon: <HeadphonesIcon className="w-10 h-10" />,
               title: "24/7 Helpline",
               description: "Round-the-clock medical assistance and support",
-              color: "green",
+              color: "blue",
             },
             {
               icon: <Heart className="w-10 h-10" />,
               title: "Patient Centric",
               description: "Personalized care plans for every patient",
-              color: "pink",
+              color: "blue",
             },
             {
               icon: <Sparkles className="w-10 h-10" />,
               title: "Modern Facility",
               description: "State-of-the-art medical equipment & technology",
-              color: "purple",
+              color: "blue",
             },
           ].map((benefit, index) => (
             <div
@@ -297,42 +352,6 @@ const WhyChooseUs = () => {
               <p className="text-gray-600 text-sm">{benefit.description}</p>
             </div>
           ))}
-        </div>
-
-        {/* CTA Section */}
-        <div className="text-center bg-gradient-to-br from-blue-50 to-cyan-50 rounded-3xl p-12 border border-blue-100">
-          <div className="max-w-2xl mx-auto">
-            <h3 className="text-3xl font-bold text-gray-900 mb-6">
-              Ready to Experience Premium Healthcare?
-            </h3>
-            <p className="text-gray-600 text-lg mb-8">
-              Book your appointment today and take the first step towards better
-              health with our comprehensive medical services.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-              <button className="inline-flex items-center justify-center gap-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-10 py-4 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-cyan-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 w-full sm:w-auto">
-                <Sparkles className="w-5 h-5" />
-                Book Appointment Now
-                <ArrowRight className="w-5 h-5" />
-              </button>
-              <div className="text-center">
-                <div className="text-gray-700 font-medium mb-1">
-                  <span className="text-blue-600 font-bold">Emergency?</span>{" "}
-                  Call us 24/7
-                </div>
-                <a
-                  href="tel:9812166286"
-                  className="text-2xl font-bold text-gray-900 hover:text-blue-700 transition-colors"
-                >
-                  +91 98121 66286
-                </a>
-              </div>
-            </div>
-            <p className="text-gray-500 text-sm mt-8">
-              Walk-ins welcome | Same day appointments available | Free parking
-              facility
-            </p>
-          </div>
         </div>
       </div>
     </section>

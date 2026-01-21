@@ -186,76 +186,13 @@ const Services = () => {
                   ))}
                 </ul>
 
-                <button className="w-full bg-blue-600 text-white py-3 rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center justify-center">
+                <button className="w-full bg-blue-900 text-white py-3 rounded-lg font-medium hover:bg-gradient-to-br from-blue-900 to-blue-800 transition-colors flex items-center justify-center">
                   <Calendar className="w-5 h-5 mr-2" />
                   Book Now
                 </button>
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Features Section */}
-        <div className="bg-blue-50 rounded-xl p-8 mb-12">
-          <h3 className="text-2xl font-bold text-center text-gray-900 mb-8">
-            Why Choose Our Diagnostic Center
-          </h3>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {features.map((feature, index) => (
-              <div
-                key={index}
-                className="bg-white rounded-lg p-6 text-center hover:shadow-md transition-shadow"
-              >
-                <div className="inline-flex items-center justify-center w-14 h-14 bg-blue-100 text-blue-600 rounded-full mb-4">
-                  {feature.icon}
-                </div>
-                <h4 className="font-semibold text-gray-900 mb-2">
-                  {feature.title}
-                </h4>
-                <p className="text-sm text-gray-600">{feature.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* CTA Section */}
-        <div className="text-center">
-          <div className="max-w-2xl mx-auto mb-8">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">
-              Ready for Your Diagnostic Test?
-            </h3>
-            <p className="text-gray-600">
-              Book your appointment today or call us for emergency services.
-              We're here to provide accurate and timely diagnostic services.
-            </p>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link
-              href="/contact"
-              className="inline-flex items-center justify-center gap-3 bg-blue-600 text-white px-8 py-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-lg"
-            >
-              <Calendar className="w-5 h-5" />
-              Book Appointment Online
-            </Link>
-
-            <div className="text-center">
-              <p className="text-gray-600 mb-2">Or call us directly</p>
-              <a
-                href="tel:9812166286"
-                className="inline-flex items-center justify-center gap-3 text-blue-600 font-semibold text-lg"
-              >
-                <Phone className="w-5 h-5" />
-                9812166286
-              </a>
-            </div>
-          </div>
-
-          <p className="text-gray-500 mt-8 text-sm">
-            Open Monday to Saturday: 8:00 AM - 8:00 PM | Sunday: 9:00 AM - 2:00
-            PM
-          </p>
         </div>
       </div>
     </section>
