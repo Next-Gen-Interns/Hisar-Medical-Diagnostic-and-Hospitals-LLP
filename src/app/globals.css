@@ -1,1 +1,564 @@
+/* ============================= */
+/* GLOBAL THEME & ROOT VARIABLES */
+/* ============================= */
 @import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+  --font-sans: Arial, Helvetica, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  margin: 0;
+  padding: 0;
+}
+
+/* ============================= */
+/* UTILITY ANIMATIONS */
+/* ============================= */
+
+/* Fade In */
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Fade In Up */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Slide Left/Right */
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Spin */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Shimmer Effect */
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Utility Classes */
+.animate-fade-in { animation: fade-in 0.8s ease-out; }
+.animate-fade-in-up { animation: fade-in-up 1s ease-out 0.3s both; }
+.animate-slide-in-left { animation: slide-in-left 0.8s ease-out 0.2s both; }
+.animate-slide-in-right { animation: slide-in-right 0.8s ease-out 0.4s both; }
+.animate-spin { animation: spin 1s linear infinite; }
+
+.hover-lift {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hover-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+}
+
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+.shimmer::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  animation: shimmer 2s infinite;
+}
+
+/* ============================= */
+/* ABOUT US BANNER */
+/* ============================= */
+.about-banner {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  overflow: hidden;
+}
+
+/* Background Image */
+.about-banner-img {
+  object-fit: cover;
+  object-position: center top;
+  animation: bannerZoomFade 8s ease-out forwards;
+}
+
+@keyframes bannerZoomFade {
+  0% { transform: scale(1.15); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* Grey Slanted Strip - Fixed with more specific selector */
+.about-banner .about-banner-strip {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 130px;
+  background: #E5E5E5;
+  clip-path: polygon(0 22%, 100% 0, 100% 100%, 0 100%);
+  transform: translateY(100%);
+  animation: stripReveal 1.2s ease-out forwards;
+}
+
+@keyframes stripReveal {
+  to { transform: translateY(0); }
+}
+
+/* White About Box */
+.about-banner-box {
+  position: absolute;
+  bottom: 0;
+  left: 70px;
+  background: #ffffff;
+  padding: 22px 36px;
+  clip-path: polygon(0 0, 88% 0, 100% 50%, 88% 100%, 0 100%);
+  opacity: 0;
+  transform: translateX(-40px);
+  animation: boxSlideFade 1s ease-out forwards;
+  animation-delay: 0.8s;
+}
+
+@keyframes boxSlideFade {
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* Text Styling + Staggered Animation */
+.about-banner-box h1 {
+  margin: 0;
+  font-size: 36px;
+  font-weight: 700;
+  color: #0a1f44;
+  opacity: 0;
+  transform: translateY(15px);
+  animation: textUp 0.8s ease-out forwards;
+  animation-delay: 1.2s;
+}
+
+.about-banner-box p {
+  margin-top: 0;
+  font-size: 18px;
+  color: #555;
+  opacity: 0;
+  transform: translateY(15px);
+  animation: textUp 0.9s ease-out forwards;
+  animation-delay: 1.35s;
+}
+
+@keyframes textUp {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ============================= */
+/* RESPONSIVE STYLING */
+/* ============================= */
+@media (max-width: 768px) {
+  .about-banner { height: 300px; }
+  .about-banner .about-banner-strip { height: 110px; }
+  .about-banner-box {
+    left: 20px;
+    bottom: 45px;
+    padding: 18px 26px;
+  }
+  .about-banner-box h1 { font-size: 26px; }
+  .about-banner-box p { font-size: 16px; }
+}
+/* Add to globals.css or your main CSS file */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes pulseSlow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.15);
+    opacity: 0.8;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 1s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-slide-in-up {
+  animation: slideInUp 0.7s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-slide-in-left {
+  animation: slideInLeft 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-pulse-slow {
+  animation: pulseSlow 3s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+/* Add to globals.css */
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cardEnter {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-card-enter {
+  animation: cardEnter 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-gradient-flow {
+  background-size: 200% 200%;
+  animation: gradientFlow 2s ease infinite;
+}
+
+.animation-delay-300 {
+  animation-delay: 300ms;
+}
+
+/* Add to globals.css */
+
+@keyframes floatIn {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) scale(0.95);
+  }
+  60% {
+    transform: translateY(-5px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes stepFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes slideInLeftEnhanced {
+  0% {
+    opacity: 0;
+    transform: translateX(-40px) rotateX(10deg);
+  }
+  70% {
+    transform: translateX(5px) rotateX(-2deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) rotateX(0);
+  }
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes wave {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-float-in {
+  animation: floatIn 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  opacity: 0;
+}
+
+.animate-float-in-delayed {
+  animation: floatIn 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s forwards;
+  opacity: 0;
+}
+
+.animate-step-float {
+  animation: stepFloat 3s ease-in-out infinite;
+  opacity: 0;
+  animation-fill-mode: both;
+}
+
+.animate-slide-in-left-enhanced {
+  animation: slideInLeftEnhanced 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+.animate-gradient-flow {
+  background: linear-gradient(45deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+  background-size: 400% 400%;
+  animation: gradientFlow 8s ease infinite;
+}
+
+.animate-wave {
+  background: linear-gradient(90deg, transparent, #3b82f6, #8b5cf6, transparent);
+  background-size: 200% 100%;
+  animation: wave 2s ease-in-out infinite;
+}
+
+/* Add to globals.css - FAQ animations */
+
+@keyframes titleSlide {
+  0% {
+    opacity: 0;
+    transform: translateY(40px) scale(0.95);
+  }
+  60% {
+    transform: translateY(-5px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes lineExpand {
+  0% {
+    width: 0;
+    opacity: 0;
+    transform: scaleX(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scaleX(1.1);
+  }
+  100% {
+    width: 200px;
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+
+@keyframes textReveal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes cardRise {
+  0% {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+  }
+  70% {
+    transform: translateY(-10px) scale(1.02);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes answerExpand {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(5px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-titleSlide {
+  animation: titleSlide 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  opacity: 0;
+}
+
+.animate-lineExpand {
+  animation: lineExpand 1s ease-out 0.8s forwards;
+  transform-origin: center;
+}
+
+.animate-textReveal {
+  animation: textReveal 1s ease-out 0.5s forwards;
+  opacity: 0;
+}
+
+.animate-cardRise {
+  animation: cardRise 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  opacity: 0;
+}
+
+.animate-answerExpand {
+  animation: answerExpand 0.8s ease-out 0.2s forwards;
+  opacity: 0;
+}
+
+/* Optional: Add a pulse glow animation */
+@keyframes pulseGlow {
+  0%, 100% {
+    opacity: 0.1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.2;
+    transform: scale(1.1);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 2s infinite;
+}
+
+/* Responsive line width */
+@media (max-width: 640px) {
+  @keyframes lineExpand {
+    100% {
+      width: 120px;
+    }
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .animate-titleSlide,
+  .animate-lineExpand,
+  .animate-textReveal,
+  .animate-cardRise,
+  .animate-answerExpand,
+  .animate-pulse-glow {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+

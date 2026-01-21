@@ -19,7 +19,7 @@ const Header = () => {
 
   const navItems = [
     { name: "Home", href: "/" },
-    { name: "About & Services", href: "/about" },
+    { name: "About & Services", href: "/about-us" },
   ];
 
   return (
@@ -45,7 +45,7 @@ const Header = () => {
 
           {/* CENTER → TITLE (DESKTOP ONLY) */}
           <div className="hidden md:block absolute left-1/2 -translate-x-1/2">
-            <h1 className="text-lg font-bold text-primary whitespace-nowrap">
+            <h1 className="text-black text-lg font-bold text-primary whitespace-nowrap">
               HISAR MEDICAL DIAGNOSTIC & HOSPITALS LLP
             </h1>
           </div>
